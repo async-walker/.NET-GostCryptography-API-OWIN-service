@@ -52,7 +52,7 @@ namespace GostCryptographyAPI.Controllers
         }
 
         [HttpPost]
-        public HttpResponseMessage VerifyMessage([FromBody] byte[] signedMessage)
+        public HttpResponseMessage VerifySign([FromBody] byte[] signedMessage)
         {
             try
             {
