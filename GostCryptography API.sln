@@ -5,6 +5,12 @@ VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GostCryptographyAPI", "GostCryptographyAPI\GostCryptographyAPI.csproj", "{C34ED174-3EAD-4854-84F8-99F4F6B5A7C9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GostCryptography.Client", "GostCryptography.Client\GostCryptography.Client.csproj", "{15DF8781-ECA9-4A00-B3DA-1FFB55E954D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GostCryptography.Client.Tests", "GostCryptography.Client.Tests\GostCryptography.Client.Tests.csproj", "{04B8D844-B5CB-45EC-8EF1-085138983F0C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GostCryptographyAPITests", "GostCryptographyAPITests\GostCryptographyAPITests.csproj", "{3D47AC37-7FF7-457C-86CF-600CA0292C6F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +21,18 @@ Global
 		{C34ED174-3EAD-4854-84F8-99F4F6B5A7C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C34ED174-3EAD-4854-84F8-99F4F6B5A7C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C34ED174-3EAD-4854-84F8-99F4F6B5A7C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15DF8781-ECA9-4A00-B3DA-1FFB55E954D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15DF8781-ECA9-4A00-B3DA-1FFB55E954D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15DF8781-ECA9-4A00-B3DA-1FFB55E954D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15DF8781-ECA9-4A00-B3DA-1FFB55E954D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04B8D844-B5CB-45EC-8EF1-085138983F0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04B8D844-B5CB-45EC-8EF1-085138983F0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04B8D844-B5CB-45EC-8EF1-085138983F0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04B8D844-B5CB-45EC-8EF1-085138983F0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D47AC37-7FF7-457C-86CF-600CA0292C6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D47AC37-7FF7-457C-86CF-600CA0292C6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D47AC37-7FF7-457C-86CF-600CA0292C6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D47AC37-7FF7-457C-86CF-600CA0292C6F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
