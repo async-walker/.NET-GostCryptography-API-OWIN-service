@@ -22,16 +22,17 @@ namespace GostCryptographyAPI.Controllers
         [HttpPost]
         public HttpResponseMessage SignMessage(
             [FromBody] byte[] message,
-            [FromUri] string subjectName,
+            [FromUri] string certFindValue,
             [FromUri] StoreLocation storeLocation = StoreLocation.CurrentUser,
-            [FromUri] StoreName storeName = StoreName.My)
+            [FromUri] StoreName storeName = StoreName.My,
+            [FromUri] X509FindType findType = X509FindType.FindBySubjectName)
         {
             try
             {
-                var signerCert = CertificatesHelper.FindCertificateBySubject(
-                    subjectName, storeLocation, storeName);
+                var signerCert = CertificatesHelper.FindCertificate(
+                    storeLocation, storeName, findType, certFindValue);
 
-                var signedMessage = GostCryptographyHelper.SignMessage(signerCert, message);
+                var signedMessage = GostCryptographyCMSHelper.SignMessage(signerCert, message);
 
                 return HttpResponseMessageHelper.GetHttpResponseMessage(
                     statusCode: HttpStatusCode.OK,
@@ -43,7 +44,7 @@ namespace GostCryptographyAPI.Controllers
                 _logger.Error(ex, "Исключение при подписи сообщения");
 
                 return HttpResponseMessageHelper.GetHttpResponseMessage(
-                    statusCode: HttpStatusCode.BadRequest,
+                    statusCode: HttpStatusCode.InternalServerError,
                     content: new StringContent(
                         $"Сообщение об ошибке: {ex.Message}\n\n" +
                         $"Предшествующая ошибка: {ex.InnerException.Message}"),

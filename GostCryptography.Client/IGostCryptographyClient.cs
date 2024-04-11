@@ -6,9 +6,10 @@ namespace GostCryptography.Client
     {
         Task<byte[]> SignMessageCMS(
             byte[] message,
-            string signerSubjectName,
+            X509FindType findType,
             StoreLocation storeLocation,
-            StoreName storeName);
+            StoreName storeName,
+            string findValue);
         Task<byte[]> VerifySignCMS(byte[] message);
     }
 }

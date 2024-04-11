@@ -14,7 +14,7 @@ namespace GostCryptography.Client
                 new RestClientOptions(options.ApiAddress));
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc/>   
         public void Dispose()
         {
             _client?.Dispose();
@@ -23,15 +23,17 @@ namespace GostCryptography.Client
 
         public async Task<byte[]> SignMessageCMS(
             byte[] message, 
-            string signerSubjectName,
+            X509FindType findType,
             StoreLocation storeLocation,
-            StoreName storeName)
+            StoreName storeName,
+            string findValue)
         {
             var request = new RestRequest("CMS/SignMessage", Method.Post)
                 .AddBody(message, ContentType.Binary)
-                .AddQueryParameter("subjectName", signerSubjectName)
                 .AddQueryParameter("storeLocation", storeLocation)
-                .AddQueryParameter("storeName", storeName);
+                .AddQueryParameter("storeName", storeName)
+                .AddQueryParameter("findType", findType)
+                .AddQueryParameter("findValue", findValue);
 
             var response = await _client.GetResponseAsync(request);
 
