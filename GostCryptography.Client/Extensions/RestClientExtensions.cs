@@ -1,9 +1,4 @@
 ﻿using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GostCryptography.Client.Extensions
 {
@@ -24,7 +19,9 @@ namespace GostCryptography.Client.Extensions
                 else
                     throw new ArgumentNullException(
                         paramName: nameof(response.Content),
-                        message: $"Ответ неуспешен ({response.StatusCode})");
+                        message: 
+                        $"Контент ответа отсутствует\n" +
+                        $" (url запроса: [{response.ResponseUri}])");
             }
 
             return response;
