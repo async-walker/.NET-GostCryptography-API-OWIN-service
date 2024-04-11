@@ -19,6 +19,15 @@ namespace GostCryptographyAPI.Controllers
             _logger = Log.Logger;
         }
 
+        [HttpGet]
+        public string Get()
+        {
+            return 
+                "Available CMS methods: \n" +
+                "1)SignMessage \n" +
+                "2)VerifySign \n";
+        }
+
         [HttpPost]
         public HttpResponseMessage SignMessage(
             [FromBody] byte[] message,
