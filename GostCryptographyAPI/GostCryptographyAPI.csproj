@@ -117,7 +117,7 @@
     <Compile Include="Exceptions\CertificateNotFoundException.cs" />
     <Compile Include="Formatters\BinaryMediaTypeFormatter.cs" />
     <Compile Include="Helpers\CertificatesHelper.cs" />
-    <Compile Include="Helpers\GostCryptographyHelper.cs" />
+    <Compile Include="Helpers\GostCryptographyCMSHelper.cs" />
     <Compile Include="Helpers\HttpResponseMessageHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
