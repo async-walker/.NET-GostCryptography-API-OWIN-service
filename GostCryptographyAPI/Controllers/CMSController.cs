@@ -31,7 +31,7 @@ namespace GostCryptographyAPI.Controllers
         [HttpPost]
         public HttpResponseMessage SignMessage(
             [FromBody] byte[] message,
-            [FromUri] string certFindValue,
+            [FromUri] string findValue,
             [FromUri] StoreLocation storeLocation = StoreLocation.CurrentUser,
             [FromUri] StoreName storeName = StoreName.My,
             [FromUri] X509FindType findType = X509FindType.FindBySubjectName)
@@ -39,7 +39,7 @@ namespace GostCryptographyAPI.Controllers
             try
             {
                 var signerCert = CertificatesHelper.FindCertificate(
-                    storeLocation, storeName, findType, certFindValue);
+                    storeLocation, storeName, findType, findValue);
 
                 var signedMessage = GostCryptographyCMSHelper.SignMessage(signerCert, message);
 
