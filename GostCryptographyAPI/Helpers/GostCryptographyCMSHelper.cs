@@ -14,7 +14,10 @@ namespace GostCryptographyAPI.Helpers
             {
                 var signedCms = new GostSignedCms(new ContentInfo(message));
 
-                var signer = new CmsSigner(certificate);
+                var signer = new CmsSigner(certificate)
+                {
+                    IncludeOption = X509IncludeOption.EndCertOnly
+                };
 
                 signedCms.ComputeSignature(signer);
 
