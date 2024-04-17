@@ -1,10 +1,13 @@
 ﻿using GostCryptography.Pkcs;
+using GostCryptographyAPI.Exceptions;
 using GostCryptographyAPI.Helpers;
 using GostCryptographyAPI.Types;
+using Newtonsoft.Json;
 using Serilog;
 using System;
 using System.Net;
 using System.Net.Http;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Web.Http;
 
@@ -23,9 +26,9 @@ namespace GostCryptographyAPI.Controllers
         public string Get()
         {
             return 
-                "Available CMS methods: \n" +
-                "1)SignMessage \n" +
-                "2)VerifySign \n";
+                "Доступные методы CMS:\n" +
+                "1)SignMessage\n" +
+                "2)VerifySign\n";
         }
 
         [HttpPost]
@@ -36,6 +39,15 @@ namespace GostCryptographyAPI.Controllers
             [FromUri] StoreName storeName = StoreName.My,
             [FromUri] X509FindType findType = X509FindType.FindBySubjectName)
         {
+            if (message == null || message.Length > 1)
+            {
+                return HttpResponseMessageHelper.GetHttpResponseMessage(
+                    statusCode: HttpStatusCode.BadRequest,
+                    content: new StringContent(
+                        "Тело запроса должно содержать параметр [message] и не быть пустым"),
+                    contentType: ContentType.Text);
+            }
+
             try
             {
                 var signerCert = CertificatesHelper.FindCertificate(
@@ -48,15 +60,43 @@ namespace GostCryptographyAPI.Controllers
                     content: new ByteArrayContent(signedMessage),
                     contentType: ContentType.Binary);
             }
-            catch (Exception ex)
+            catch (CertificateNotFoundException ex)
             {
-                _logger.Error(ex, "Исключение при подписи сообщения");
+                var responseError = new ResponseError(
+                    statusCode: (int)HttpStatusCode.BadRequest,
+                    code: ResponseCodes.CERT_NOT_FOUND,
+                    message: ex.Message);
+
+                return HttpResponseMessageHelper.GetHttpResponseMessage(
+                    statusCode: HttpStatusCode.BadRequest,
+                    content: new StringContent(
+                        JsonConvert.SerializeObject(responseError)),
+                    contentType: ContentType.Text);
+            }
+            catch (CryptographicException ex)
+            {
+                var responseError = new ResponseError(
+                    statusCode: (int)HttpStatusCode.InternalServerError,
+                    code: ResponseCodes.CRYPTOGRAPHYC_EXCEPTION,
+                    message: ex.Message);
 
                 return HttpResponseMessageHelper.GetHttpResponseMessage(
                     statusCode: HttpStatusCode.InternalServerError,
                     content: new StringContent(
-                        $"Сообщение об ошибке: {ex.Message}\n\n" +
-                        $"Предшествующая ошибка: {ex.InnerException.Message}"),
+                        JsonConvert.SerializeObject(responseError)),
+                    contentType: ContentType.Text);
+            }
+            catch (Exception ex)
+            {
+                var responseError = new ResponseError(
+                    statusCode: (int)HttpStatusCode.InternalServerError,
+                    code: ResponseCodes.OTHER_EXCEPTION,
+                    message: ex.Message);
+
+                return HttpResponseMessageHelper.GetHttpResponseMessage(
+                    statusCode: HttpStatusCode.InternalServerError,
+                     content: new StringContent(
+                        JsonConvert.SerializeObject(responseError)),
                     contentType: ContentType.Text);
             }
         }
