@@ -25,12 +25,14 @@ namespace GostCryptographyAPI.Helpers
 
                 if (certificates.Count > 0)
                 {
-                    Log.Information(
-                        "Найдено {0} сертификатов " +
-                        "с поиском по {1} значением [{2}] в хранилище {3}/{4}", 
-                        certificates.Count, findType, findValue, storeLocation, storeName);
+                    var targetCert = certificates[0];
 
-                    return certificates[0];
+                    Log.Information(
+                        "Найдено {0} сертификатов с поиском по {1} и значением [{2}] в хранилище {3}/{4}.\n" +
+                        "Будет использован следующий сертификат: {5}", 
+                        certificates.Count, findType, findValue, storeLocation, storeName, targetCert.Subject);
+
+                    return targetCert;
                 }
                 else
                 {
@@ -38,8 +40,7 @@ namespace GostCryptographyAPI.Helpers
                         "Найдено {0} валидных сертификатов в хранилище {1}/{2} с поиском по {3} ({4})",
                         0, storeLocation, storeName, findType, findValue);
 
-                    throw new CertificateNotFoundException(
-                        $"Сертификат субъекта [{findValue}] не был найден в хранилище");
+                    throw new CertificateNotFoundException(storeLocation, storeName, findType, findValue);
                 }
             }
         }
