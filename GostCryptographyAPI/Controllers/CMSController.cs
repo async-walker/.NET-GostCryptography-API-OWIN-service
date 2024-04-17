@@ -39,7 +39,7 @@ namespace GostCryptographyAPI.Controllers
             [FromUri] StoreName storeName = StoreName.My,
             [FromUri] X509FindType findType = X509FindType.FindBySubjectName)
         {
-            if (message == null || message.Length > 1)
+            if (message == null || message.Length < 1)
             {
                 return HttpResponseMessageHelper.GetHttpResponseMessage(
                     statusCode: HttpStatusCode.BadRequest,
