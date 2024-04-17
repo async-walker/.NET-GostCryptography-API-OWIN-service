@@ -115,6 +115,7 @@
   <ItemGroup>
     <Compile Include="Controllers\CMSController.cs" />
     <Compile Include="Exceptions\CertificateNotFoundException.cs" />
+    <Compile Include="Exceptions\ResponseError.cs" />
     <Compile Include="Formatters\BinaryMediaTypeFormatter.cs" />
     <Compile Include="Helpers\CertificatesHelper.cs" />
     <Compile Include="Helpers\GostCryptographyCMSHelper.cs" />
@@ -125,6 +126,7 @@
     <Compile Include="TopShelf\ConfigureService.cs" />
     <Compile Include="TopShelf\RestService.cs" />
     <Compile Include="Types\ContentType.cs" />
+    <Compile Include="Types\ResponseCodes.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
