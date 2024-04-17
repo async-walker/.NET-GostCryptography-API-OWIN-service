@@ -77,7 +77,7 @@ namespace GostCryptographyAPI.Controllers
             {
                 var responseError = new ResponseError(
                     statusCode: (int)HttpStatusCode.InternalServerError,
-                    code: ResponseCodes.CRYPTOGRAPHYC_EXCEPTION,
+                    code: ResponseCodes.CRYPTOGRAPHIC_EXCEPTION,
                     message: ex.Message);
 
                 return HttpResponseMessageHelper.GetHttpResponseMessage(
