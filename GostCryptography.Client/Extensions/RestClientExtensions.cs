@@ -1,27 +1,22 @@
-﻿using RestSharp;
+﻿using GostCryptography.Client.Exceptions;
+using RestSharp;
 
 namespace GostCryptography.Client.Extensions
 {
     internal static class RestClientExtensions
     {
         public static async Task<RestResponse> GetResponseAsync(
-           this RestClient client,
-           RestRequest request)
+           this IRestClient client,
+           RestRequest request,
+           IExceptionParser exceptionsParser)
         {
             var response = await client.ExecuteAsync(request);
 
             if (!response.IsSuccessStatusCode)
             {
-                if (response.RawBytes is not null)
-                    return response;
-                else if (response.Content is not null)
-                    return response;
-                else
-                    throw new ArgumentNullException(
-                        paramName: nameof(response.Content),
-                        message: 
-                        $"Контент ответа отсутствует\n" +
-                        $" (url запроса: [{response.ResponseUri}])");
+                var failedApiResponse = response.DeserializeContent<ApiResponseError>();
+
+                throw exceptionsParser.Parse(failedApiResponse);
             }
 
             return response;
