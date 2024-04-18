@@ -1,4 +1,5 @@
-﻿using GostCryptography.Client.Extensions;
+﻿using GostCryptography.Client.Exceptions;
+using GostCryptography.Client.Extensions;
 using RestSharp;
 using System.Security.Cryptography.X509Certificates;
 
@@ -7,11 +8,14 @@ namespace GostCryptography.Client
     public class GostCryptographyClient : IGostCryptographyClient, IDisposable
     {
         private readonly RestClient _client;
+        private readonly IExceptionParser _exceptionsParser;
 
         public GostCryptographyClient(GostCryptographyOptions options) 
         {
             _client = new RestClient(
                 new RestClientOptions(options.ApiAddress));
+
+            _exceptionsParser = new DefaultExceptionParser();
         }
 
         /// <inheritdoc/>   
@@ -35,7 +39,7 @@ namespace GostCryptography.Client
                 .AddQueryParameter("findType", findType)
                 .AddQueryParameter("findValue", findValue);
 
-            var response = await _client.GetResponseAsync(request);
+            var response = await _client.GetResponseAsync(request, _exceptionsParser);
 
             return response.RawBytes!;
         }
@@ -45,7 +49,7 @@ namespace GostCryptography.Client
             var request = new RestRequest("CMS/VerifySign", Method.Post)
                 .AddBody(message, ContentType.Binary);
 
-            var response = await _client.GetResponseAsync(request);
+            var response = await _client.GetResponseAsync(request, _exceptionsParser);
 
             return response.RawBytes!;
         }
